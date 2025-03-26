@@ -11,6 +11,7 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  CircularProgress,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -30,6 +31,7 @@ function Contact() {
     email: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: '',
@@ -38,7 +40,20 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
+      // Form validasyonu
+      if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+        throw new Error('Lütfen tüm alanları doldurun');
+      }
+
+      // Email formatı kontrolü
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Geçerli bir email adresi girin');
+      }
+
       const response = await emailjs.send(
         'service_7c2tkkc',
         'template_h9dgp6h',
@@ -64,9 +79,11 @@ function Contact() {
       console.error('EmailJS Error:', error);
       setSnackbar({
         open: true,
-        message: 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.',
+        message: error.message || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.',
         severity: 'error',
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -142,6 +159,8 @@ function Contact() {
                   onChange={handleChange}
                   margin="normal"
                   required
+                  error={!formData.name.trim()}
+                  helperText={!formData.name.trim() ? 'İsim alanı boş bırakılamaz' : ''}
                   sx={{ mb: 2 }}
                 />
                 <TextField
@@ -153,6 +172,8 @@ function Contact() {
                   onChange={handleChange}
                   margin="normal"
                   required
+                  error={formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)}
+                  helperText={formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'Geçerli bir email adresi girin' : ''}
                   sx={{ mb: 2 }}
                 />
                 <TextField
@@ -165,6 +186,8 @@ function Contact() {
                   onChange={handleChange}
                   margin="normal"
                   required
+                  error={!formData.message.trim()}
+                  helperText={!formData.message.trim() ? 'Mesaj alanı boş bırakılamaz' : ''}
                   sx={{ mb: 3 }}
                 />
                 <Button
@@ -173,9 +196,10 @@ function Contact() {
                   color="primary"
                   size="large"
                   fullWidth
+                  disabled={loading}
                   sx={{ py: 1.5 }}
                 >
-                  Send Message
+                  {loading ? <CircularProgress size={24} color="inherit" /> : 'Send Message'}
                 </Button>
               </form>
             </Paper>
@@ -282,13 +306,9 @@ function Contact() {
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
