@@ -105,7 +105,7 @@ function App() {
         <meta property="og:description" content="Welcome to my personal website. I am a full-stack developer specializing in React and JavaScript." />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https://api.emailjs.com;" />
       </Helmet>
       <ThemeProvider theme={theme}>
         <CssBaseline />
