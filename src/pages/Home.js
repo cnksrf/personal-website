@@ -7,6 +7,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import { Helmet } from 'react-helmet';
 
 const MotionBox = motion(Box);
@@ -22,7 +23,6 @@ function Home() {
         <meta property="og:description" content="Welcome to my personal website. I am a full-stack developer specializing in React and JavaScript." />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;" />
       </Helmet>
       <Box
         sx={{
@@ -102,17 +102,20 @@ function Home() {
                     component={RouterLink}
                     to="/projects"
                     variant="contained"
+                    color="secondary"
                     size="large"
-                    startIcon={<LaunchIcon />}
+                    endIcon={<LaunchIcon />}
                     sx={{
-                      bgcolor: 'white',
-                      color: 'primary.main',
+                      borderRadius: 2,
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      textTransform: 'none',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                       '&:hover': {
-                        bgcolor: 'grey.100',
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                        boxShadow: '0 6px 8px rgba(0, 0, 0, 0.2)',
                       },
-                      transition: 'all 0.3s ease',
                     }}
                   >
                     View My Work
@@ -121,18 +124,19 @@ function Home() {
                     component={RouterLink}
                     to="/contact"
                     variant="outlined"
+                    color="inherit"
                     size="large"
-                    startIcon={<EmailIcon />}
                     sx={{
-                      borderColor: 'white',
-                      color: 'white',
+                      borderRadius: 2,
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      textTransform: 'none',
+                      borderWidth: 2,
                       '&:hover': {
-                        borderColor: 'white',
-                        bgcolor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 2,
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                       },
-                      transition: 'all 0.3s ease',
                     }}
                   >
                     Contact Me
@@ -153,6 +157,13 @@ function Home() {
                       sx={{ color: 'white', opacity: 0.8, '&:hover': { opacity: 1 } }}
                     >
                       <LinkedInIcon />
+                    </IconButton>
+                    <IconButton
+                      href="https://www.instagram.com/serif.cenk"
+                      target="_blank"
+                      sx={{ color: 'white', opacity: 0.8, '&:hover': { opacity: 1 } }}
+                    >
+                      <InstagramIcon />
                     </IconButton>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
