@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
+import React from 'react';
 import {
   Container,
   Typography,
   Box,
-  TextField,
-  Button,
   Grid,
   Paper,
   IconButton,
-  Snackbar,
-  Alert,
-  CircularProgress,
+  useTheme,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -23,81 +18,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 const MotionGrid = motion(Grid);
 
 function Contact() {
-  useEffect(() => {
-    emailjs.init('Eb7Fts2eTnZ5dn1gi');
-  }, []);
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'success',
-  });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Form validasyonu
-      if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-        throw new Error('Lütfen tüm alanları doldurun');
-      }
-
-      // Email formatı kontrolü
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        throw new Error('Geçerli bir email adresi girin');
-      }
-
-      const response = await emailjs.send(
-        'service_7c2tkkc',
-        'template_h9dgp6h',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        'Eb7Fts2eTnZ5dn1gi'
-      );
-      
-      if (response.status === 200) {
-        setSnackbar({
-          open: true,
-          message: 'Mesajınız başarıyla gönderildi!',
-          severity: 'success',
-        });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        throw new Error('Gönderim başarısız oldu');
-      }
-    } catch (error) {
-      console.error('EmailJS Error:', error);
-      setSnackbar({
-        open: true,
-        message: error.message || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.',
-        severity: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
+  const theme = useTheme();
 
   const contactInfo = [
     {
@@ -105,12 +26,35 @@ function Contact() {
       title: 'Email',
       content: 'cenkserif00@gmail.com',
       link: 'mailto:cenkserif00@gmail.com',
+      description: 'Feel free to reach out to me via email',
     },
     {
       icon: <LocationOnIcon sx={{ fontSize: 40 }} />,
       title: 'Location',
       content: 'Varna, Bulgaria',
       link: '#',
+      description: 'Currently based in Varna, Bulgaria',
+    },
+  ];
+
+  const socialLinks = [
+    {
+      icon: <GitHubIcon sx={{ fontSize: 32 }} />,
+      title: 'GitHub',
+      link: 'https://github.com/cnksrf',
+      description: 'Check out my code repositories',
+    },
+    {
+      icon: <LinkedInIcon sx={{ fontSize: 32 }} />,
+      title: 'LinkedIn',
+      link: 'https://www.linkedin.com/in/cenk-%C5%9Ferif-86547b319/',
+      description: 'Connect with me professionally',
+    },
+    {
+      icon: <InstagramIcon sx={{ fontSize: 32 }} />,
+      title: 'Instagram',
+      link: 'https://www.instagram.com/serif.cenk',
+      description: 'Follow me on Instagram',
     },
   ];
 
@@ -128,7 +72,15 @@ function Contact() {
           align="center"
           sx={{ mb: 6, fontWeight: 700 }}
         >
-          Contact Me
+          Get in Touch
+        </Typography>
+        <Typography
+          variant="h6"
+          align="center"
+          color="text.secondary"
+          sx={{ mb: 8, maxWidth: '600px', mx: 'auto' }}
+        >
+          I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
         </Typography>
       </motion.div>
 
@@ -146,33 +98,54 @@ function Contact() {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
+                background: theme.palette.mode === 'dark' 
+                  ? 'linear-gradient(145deg, #1e1e1e 0%, #2d2d2d 100%)'
+                  : 'linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%)',
               }}
             >
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-                Follow Me
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
+                Contact Information
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                <IconButton
-                  href="https://github.com/cnksrf"
-                  target="_blank"
-                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
-                >
-                  <GitHubIcon sx={{ fontSize: 32 }} />
-                </IconButton>
-                <IconButton
-                  href="https://www.linkedin.com/in/cenk-%C5%9Ferif-86547b319/"
-                  target="_blank"
-                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
-                >
-                  <LinkedInIcon sx={{ fontSize: 32 }} />
-                </IconButton>
-                <IconButton
-                  href="https://www.instagram.com/serif.cenk"
-                  target="_blank"
-                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
-                >
-                  <InstagramIcon sx={{ fontSize: 32 }} />
-                </IconButton>
+              <Box sx={{ mt: 2 }}>
+                <Grid container spacing={3}>
+                  {contactInfo.map((info, index) => (
+                    <Grid item xs={12} key={index}>
+                      <Box
+                        component="a"
+                        href={info.link}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          p: 3,
+                          borderRadius: 2,
+                          bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)',
+                          transition: 'all 0.3s ease',
+                          '&:hover': {
+                            transform: 'translateX(10px)',
+                            bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
+                          },
+                        }}
+                      >
+                        <Box sx={{ color: 'primary.main', mr: 2, mt: 0.5 }}>
+                          {info.icon}
+                        </Box>
+                        <Box>
+                          <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
+                            {info.title}
+                          </Typography>
+                          <Typography variant="body1" color="primary" sx={{ mb: 1 }}>
+                            {info.content}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {info.description}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
               </Box>
             </Paper>
           </MotionGrid>
@@ -191,41 +164,47 @@ function Contact() {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
+                background: theme.palette.mode === 'dark' 
+                  ? 'linear-gradient(145deg, #1e1e1e 0%, #2d2d2d 100%)'
+                  : 'linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%)',
               }}
             >
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-                Contact Information
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
+                Connect With Me
               </Typography>
-              <Box sx={{ mt: 4 }}>
+              <Box sx={{ mt: 2 }}>
                 <Grid container spacing={3}>
-                  {contactInfo.map((info, index) => (
+                  {socialLinks.map((social, index) => (
                     <Grid item xs={12} key={index}>
                       <Box
                         component="a"
-                        href={info.link}
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         sx={{
                           display: 'flex',
-                          alignItems: 'center',
+                          alignItems: 'flex-start',
                           textDecoration: 'none',
                           color: 'inherit',
-                          p: 2,
-                          borderRadius: 1,
-                          bgcolor: 'background.default',
-                          transition: 'transform 0.3s ease',
+                          p: 3,
+                          borderRadius: 2,
+                          bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)',
+                          transition: 'all 0.3s ease',
                           '&:hover': {
                             transform: 'translateX(10px)',
+                            bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                           },
                         }}
                       >
-                        <Box sx={{ color: 'primary.main', mr: 2 }}>
-                          {info.icon}
+                        <Box sx={{ color: 'primary.main', mr: 2, mt: 0.5 }}>
+                          {social.icon}
                         </Box>
                         <Box>
-                          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                            {info.title}
+                          <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
+                            {social.title}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            {info.content}
+                            {social.description}
                           </Typography>
                         </Box>
                       </Box>
@@ -237,21 +216,6 @@ function Contact() {
           </MotionGrid>
         </Grid>
       </Grid>
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }
