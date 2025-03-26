@@ -105,7 +105,6 @@ function App() {
         <meta property="og:description" content="Welcome to my personal website. I am a full-stack developer specializing in React and JavaScript." />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob: https:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; img-src * data: blob:; font-src * data:; connect-src *;" />
       </Helmet>
       <ThemeProvider theme={theme}>
         <CssBaseline />
