@@ -105,7 +105,7 @@ function App() {
         <meta property="og:description" content="Welcome to my personal website. I am a full-stack developer specializing in React and JavaScript." />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index, follow" />
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.emailjs.com https://*.emailjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://*.emailjs.com https://api.emailjs.com/api/v1.0/email/send; frame-src 'self' https://*.emailjs.com;" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.emailjs.com https://*.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://*.emailjs.com https://api.emailjs.com/api/v1.0/email/send; frame-src 'self' https://*.emailjs.com;" />
       </Helmet>
       <ThemeProvider theme={theme}>
         <CssBaseline />
