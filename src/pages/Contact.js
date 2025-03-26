@@ -18,6 +18,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const MotionGrid = motion(Grid);
 
@@ -148,60 +149,31 @@ function Contact() {
               }}
             >
               <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-                Get in Touch
+                Follow Me
               </Typography>
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  margin="normal"
-                  required
-                  error={!formData.name.trim()}
-                  helperText={!formData.name.trim() ? 'İsim alanı boş bırakılamaz' : ''}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  margin="normal"
-                  required
-                  error={formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)}
-                  helperText={formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'Geçerli bir email adresi girin' : ''}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Message"
-                  name="message"
-                  multiline
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  margin="normal"
-                  required
-                  error={!formData.message.trim()}
-                  helperText={!formData.message.trim() ? 'Mesaj alanı boş bırakılamaz' : ''}
-                  sx={{ mb: 3 }}
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  fullWidth
-                  disabled={loading}
-                  sx={{ py: 1.5 }}
+              <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+                <IconButton
+                  href="https://github.com/cnksrf"
+                  target="_blank"
+                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
                 >
-                  {loading ? <CircularProgress size={24} color="inherit" /> : 'Send Message'}
-                </Button>
-              </form>
+                  <GitHubIcon sx={{ fontSize: 32 }} />
+                </IconButton>
+                <IconButton
+                  href="https://www.linkedin.com/in/cenk-%C5%9Ferif-86547b319/"
+                  target="_blank"
+                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
+                >
+                  <LinkedInIcon sx={{ fontSize: 32 }} />
+                </IconButton>
+                <IconButton
+                  href="https://www.instagram.com/serif.cenk"
+                  target="_blank"
+                  sx={{ color: 'primary.main', '&:hover': { color: 'primary.dark' } }}
+                >
+                  <InstagramIcon sx={{ fontSize: 32 }} />
+                </IconButton>
+              </Box>
             </Paper>
           </MotionGrid>
         </Grid>
@@ -222,7 +194,7 @@ function Contact() {
               }}
             >
               <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-                Connect With Me
+                Contact Information
               </Typography>
               <Box sx={{ mt: 4 }}>
                 <Grid container spacing={3}>
@@ -249,7 +221,7 @@ function Contact() {
                           {info.icon}
                         </Box>
                         <Box>
-                          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                             {info.title}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
@@ -260,42 +232,6 @@ function Contact() {
                     </Grid>
                   ))}
                 </Grid>
-
-                <Typography variant="h6" sx={{ mt: 4, mb: 2, fontWeight: 600 }}>
-                  Follow Me
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <IconButton
-                    href="https://github.com/cnksrf"
-                    target="_blank"
-                    color="primary"
-                    size="large"
-                    sx={{
-                      bgcolor: 'background.default',
-                      '&:hover': {
-                        bgcolor: 'primary.light',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    <GitHubIcon />
-                  </IconButton>
-                  <IconButton
-                    href="https://www.linkedin.com/in/cenk-%C5%9Ferif-86547b319/"
-                    target="_blank"
-                    color="primary"
-                    size="large"
-                    sx={{
-                      bgcolor: 'background.default',
-                      '&:hover': {
-                        bgcolor: 'primary.light',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    <LinkedInIcon />
-                  </IconButton>
-                </Box>
               </Box>
             </Paper>
           </MotionGrid>
@@ -308,7 +244,11 @@ function Contact() {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
           {snackbar.message}
         </Alert>
       </Snackbar>
