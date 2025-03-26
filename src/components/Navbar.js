@@ -14,6 +14,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemIcon,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
@@ -61,6 +62,12 @@ function Navbar({ toggleColorMode, mode }) {
           <ListItemText primary={item.text} />
         </ListItem>
       ))}
+      <ListItem button onClick={toggleColorMode}>
+        <ListItemIcon>
+          {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        </ListItemIcon>
+        <ListItemText primary={mode === 'dark' ? 'Light Mode' : 'Dark Mode'} />
+      </ListItem>
     </List>
   );
 
